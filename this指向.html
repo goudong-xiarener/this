@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+</html>
+<script>
+    //在全局作用域和一般的函数中  this->window
+    console.log(this);
+    function a() {
+        console.log(this);
+    }
+    a();
+    //在方法调用中，谁调用this指向谁
+    let obj = {
+        name:"zhangsan",
+        say:function () {
+            console.log(this);
+        }
+    };
+    obj.say();
+    //在构造函数中
+    function b(name) {
+        this.name=name;
+        console.log(this);
+    }
+
+    b("lisi");  //this->window
+    console.log(window.name);
+    let zhangsan = new b("zhangsan"); // new改变this的指向 指向构造函数实例
+
+    //箭头函数
+    let person={
+        name:"wangwu",
+        run:()=> {
+            console.log(this);
+            setTimeout( ()=> {
+                console.log(this);
+            })
+        }
+    };
+    person.run();
+    //箭头函数中没有this，它的this默认使用它父级的this,如果父级依然是箭头函数时
+    // 他会接着往上找，直到找到为止
+
+    //箭头函数的this是在定义时产生的，普通的函数this是在调用时产生的
+
+    //call/apply this指向括号里的内容
+    let d = {
+        x:1,
+        fn:function () {
+            console.log(this.x);
+        }
+    }
+    let e = {
+        x:2
+    }
+    d.fn();
+    d.fn.apply(e);
+
+</script>
